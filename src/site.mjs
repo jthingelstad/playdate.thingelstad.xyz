@@ -5,11 +5,10 @@ export const SITE_NAME = "Playdate games";
 export const SITE_TITLE = "Playdate games by Jamie Thingelstad";
 
 // Tinylytics' shared script, keyed by data-site, loaded only by the deploy
-// build (PLAYDATE_TINYLYTICS=true) and only on the production host. The site
-// has to be made in the Tinylytics dashboard first; until its embed id is
-// filled in here, no build loads anything from tinylytics.app.
+// build (PLAYDATE_TINYLYTICS=true) and only on the production host. The id
+// below is the embed id of the "Playdate games" site in Tinylytics.
 export const TINYLYTICS_SCRIPT = "https://tinylytics.app/js/script.js";
-export const TINYLYTICS_SITE = null;
+export const TINYLYTICS_SITE = "sSNCG9dpfG5FdtmNDyyE";
 
 // owner in thingelstad.com/shared/sites.json (the h-card every site carries).
 export const OWNER = {
