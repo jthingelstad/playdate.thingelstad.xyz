@@ -1,0 +1,360 @@
+/*
+ * The Woodcut look, from the game's design (docs/design/README.md in the game's
+ * repository): black and white, a 50% checker as the only grey, hard black
+ * shadows, a black rail on top. Type and the frame come from the shared
+ * tokens (tokens.css, vendored from thingelstad.com/shared). Dark mode is the
+ * Playdate's own Invert: the page swaps ink and paper; screens stay as drawn.
+ */
+
+@font-face {
+  font-family: "Londrina Solid";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/LondrinaSolid-Black.woff2") format("woff2");
+}
+
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  --checker: repeating-conic-gradient(var(--ink) 0 25%, var(--paper) 0 50%) 0
+    0 / 4px 4px;
+  --display: "Londrina Solid", "Inter Tight", system-ui, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #000000;
+    --ink: #ffffff;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--paper);
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--jt-font-body);
+  font-size: var(--jt-size-base);
+  line-height: var(--jt-line-height);
+  -webkit-text-size-adjust: 100%;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  text-decoration-thickness: 3px;
+}
+a:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+.frame {
+  width: 100%;
+  max-width: var(--jt-frame);
+  margin-inline: auto;
+  padding-inline: var(--jt-gutter);
+}
+.skip {
+  position: absolute;
+  left: -999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 2;
+  background: var(--paper);
+  padding: 0.5rem 1rem;
+}
+
+/* The rail: the HUD's black bar along the top. */
+.rail {
+  background: var(--ink);
+  color: var(--paper);
+}
+.rail__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 24px;
+  min-height: 48px;
+}
+.rail a {
+  color: var(--paper);
+  font-weight: 800;
+  font-size: var(--jt-size-label);
+  letter-spacing: var(--jt-tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.rail a[aria-current="page"],
+.rail a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.rail a:focus-visible {
+  outline-color: var(--paper);
+}
+.rail__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Type */
+.display {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin: 0 0 0.4em;
+}
+h1.display {
+  font-size: clamp(2.75rem, 9vw, 5.5rem);
+}
+h2.display {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+.display a {
+  text-decoration: none;
+}
+.display a:hover {
+  text-decoration: underline;
+}
+.lede {
+  font-size: 1.375rem;
+  line-height: 1.45;
+  max-width: 38rem;
+  margin: 0 0 1rem;
+}
+.label {
+  font-size: var(--jt-size-label);
+  font-weight: 800;
+  letter-spacing: var(--jt-tracking-label);
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+.meta,
+.section-note {
+  font-size: var(--jt-size-small);
+}
+.section-note {
+  max-width: var(--jt-measure);
+  margin: 0 0 1.5rem;
+}
+.tag {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  padding: 0 0.45em;
+  font-size: var(--jt-size-label);
+  font-weight: 800;
+  letter-spacing: var(--jt-tracking-label);
+  text-transform: uppercase;
+  line-height: 1.6;
+  vertical-align: 0.1em;
+  white-space: nowrap;
+}
+.tag--design {
+  background: var(--ink);
+  color: var(--paper);
+}
+.button {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 800;
+  font-size: var(--jt-size-ui);
+  letter-spacing: var(--jt-tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.55rem 1.1rem;
+  box-shadow: 6px 6px 0 0 color-mix(in srgb, var(--ink) 35%, var(--paper));
+}
+.button:hover {
+  text-decoration: underline;
+}
+
+/* Sections, separated by a strip of the 50% checker. */
+main > section,
+.game > section {
+  padding-block: 2.5rem 1rem;
+}
+.game > section + section::before,
+main > section + section::before {
+  content: "";
+  display: block;
+  height: 8px;
+  margin-bottom: 2.5rem;
+  background: var(--checker);
+}
+.intro {
+  padding-top: 3rem !important;
+}
+.prose p,
+.prose table {
+  max-width: var(--jt-measure);
+}
+
+/* The featured game on the home page. */
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+.feature__art {
+  display: block;
+  border: 3px solid var(--ink);
+  background: #ffffff;
+  padding: 1.5rem;
+  box-shadow: 10px 10px 0 0 var(--ink);
+}
+.feature__art img {
+  display: block;
+  width: 100%;
+}
+
+/* The game page */
+.game__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+.game__title-screen,
+.shot__screen {
+  border: 3px solid var(--ink);
+  background: #ffffff;
+  box-shadow: 8px 8px 0 0 var(--ink);
+  line-height: 0;
+}
+.game__title-screen img,
+.shot__screen img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+}
+.plaque {
+  border: 3px solid var(--ink);
+  padding: 1.5rem;
+  box-shadow: 8px 8px 0 0 var(--ink);
+}
+.plaque > p {
+  max-width: var(--jt-measure);
+}
+.plaque__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 2rem;
+}
+.plaque ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2em;
+}
+.controls {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  border: 3px solid var(--ink);
+}
+.controls caption {
+  text-align: left;
+}
+.controls th,
+.controls td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.9rem;
+  border-top: 2px solid var(--ink);
+}
+.controls th {
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
+  width: 45%;
+  border-top-color: var(--paper);
+}
+.controls tr:first-child th,
+.controls tr:first-child td {
+  border-top: 0;
+}
+.shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 2.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+.shot {
+  margin: 0;
+}
+.shot figcaption {
+  margin-top: 1rem;
+  font-size: var(--jt-size-small);
+}
+.shot--design .shot__screen {
+  border-style: dashed;
+}
+
+/* Footer */
+.foot {
+  margin-top: 3rem;
+  padding-block: 2rem 3rem;
+  border-top: 3px solid var(--ink);
+  font-size: var(--jt-size-small);
+}
+.foot p {
+  max-width: var(--jt-measure);
+}
+.foot__small {
+  font-size: var(--jt-size-label);
+}
+.h-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+.h-card data {
+  display: none;
+}
+.h-card img {
+  border-radius: 50%;
+  image-rendering: auto;
+}
+
+@media (max-width: 48rem) {
+  .feature,
+  .game__hero,
+  .plaque__cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .feature__art {
+    padding: 1rem;
+  }
+  .controls th {
+    width: 50%;
+  }
+  .lede {
+    font-size: 1.2rem;
+  }
+}

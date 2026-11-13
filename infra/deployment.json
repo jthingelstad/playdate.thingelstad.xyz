@@ -1,0 +1,21 @@
+{
+  "account": "999153317627",
+  "region": "us-east-1",
+  "stacks": {
+    "site": "playdate-xyz-site",
+    "delivery": "playdate-xyz-delivery"
+  },
+  "productionUrl": "https://playdate.thingelstad.xyz/",
+  "siteBucket": null,
+  "distributionId": null,
+  "cloudfrontDomain": null,
+  "certificateArn": null,
+  "deploymentRoleArn": null,
+  "stackTags": {
+    "Application": "Thingelstad",
+    "Project": "playdate-xyz",
+    "Repository": "jthingelstad/playdate.thingelstad.xyz",
+    "ManagedBy": "cloudformation",
+    "Environment": "production"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "playdate.thingelstad.xyz",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Playdate games by Jamie Thingelstad, the site at playdate.thingelstad.xyz.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "validate:site": "node tools/validate-site.mjs",
+    "check": "npm test && npm run build && npm run validate:site",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "shared:sync": "node tools/shared.mjs sync",
+    "shared:check": "node tools/shared.mjs check",
+    "preview": "node tools/preview.mjs",
+    "images": "uv run --with pillow python tools/render-images.py",
+    "infra:plan": "node tools/infra.mjs plan",
+    "infra:apply": "node tools/infra.mjs apply",
+    "deploy": "node tools/deploy.mjs"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-cloudformation": "3.1152.0",
+    "@aws-sdk/client-cloudfront": "3.1152.0",
+    "@aws-sdk/client-s3": "3.1152.0",
+    "@aws-sdk/client-sts": "3.1152.0",
+    "prettier": "3.9.10"
+  }
+}
