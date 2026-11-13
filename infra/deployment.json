@@ -6,11 +6,11 @@
     "delivery": "playdate-xyz-delivery"
   },
   "productionUrl": "https://playdate.thingelstad.xyz/",
-  "siteBucket": null,
-  "distributionId": null,
-  "cloudfrontDomain": null,
-  "certificateArn": null,
-  "deploymentRoleArn": null,
+  "siteBucket": "playdate-xyz-site-web-999153317627",
+  "distributionId": "EBNCAZNSZUP9O",
+  "cloudfrontDomain": "d2a1l7403kx0rh.cloudfront.net",
+  "certificateArn": "arn:aws:acm:us-east-1:999153317627:certificate/72787752-0dfd-4518-86ae-6d039c7773ba",
+  "deploymentRoleArn": "arn:aws:iam::999153317627:role/playdate-xyz-delivery-DeploymentRole-7oLO1pXu8sla",
   "stackTags": {
     "Application": "Thingelstad",
     "Project": "playdate-xyz",
