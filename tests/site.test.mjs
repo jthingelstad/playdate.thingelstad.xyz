@@ -47,11 +47,21 @@ test("copy promises no release, price, Catalog listing or unbuilt feature", () =
     /\bdownload (it|now|here)\b/i,
   ])
     assert.doesNotMatch(text, word);
-  assert.match(text, /no download/);
   assert.match(text, /no release date/);
-  // A computer opponent and sound are named only as not built.
-  for (const feature of [/computer opponent/i, /\bsound\b/i])
-    for (const line of text.split(/\n/).filter((l) => feature.test(l)))
-      assert.match(line, /A computer opponent\.|Sound\./, line.trim());
+  // A build to try is a test build, never a release (Jamie, 2026-11-14:
+  // friends sideload it from files.thingelstad.com).
+  assert.match(text, /test build/);
   for (const game of games) assert.notEqual(game.status, "Released");
+});
+
+test("a test build links its zipped .pdx on files.thingelstad.com", () => {
+  for (const game of games.filter((g) => g.build)) {
+    const { url, file, version } = game.build;
+    assert.match(url, /^https:\/\/files\.thingelstad\.com\/.+\.pdx\.zip$/);
+    assert.ok(url.endsWith(`/${file}`), url);
+    assert.ok(file.includes(version), file);
+    const page = PAGES.find((p) => p.path === `/${game.slug}/`);
+    const html = page.render({ tinylytics: false });
+    assert.ok(html.includes(`href="${url}"`), "the page links the build");
+  }
 });

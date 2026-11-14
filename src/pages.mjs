@@ -37,7 +37,7 @@ const SCREENS = [
     file: "title",
     alt: "The title screen: KUBB in cut wood letters, THROWING WOOD, and a menu of PASS + PLAY and PRACTICE.",
     caption:
-      "The title. The menu offers what works today: pass and play, and practice.",
+      "The title on November 13, when the menu offered pass and play, and practice.",
   },
   {
     file: "wind-up",
@@ -95,7 +95,7 @@ const DESIGNS = [
   {
     file: "hit",
     alt: "Design board: a burst reading TOK! as a baton tips a kubb.",
-    caption: "The hit, with a TOK! burst. Bursts are designed, not built yet.",
+    caption: "The hit, with a TOK! burst.",
   },
   {
     file: "king",
@@ -106,8 +106,7 @@ const DESIGNS = [
   {
     file: "hand-off",
     alt: "Design board: the hand-off card, pass the Playdate to BIRCH, with a map of the pitch.",
-    caption:
-      "The hand-off card. ASH and BIRCH stand in for team names, which the game cannot take yet.",
+    caption: "The hand-off card. ASH and BIRCH stand in for team names.",
   },
   {
     file: "winner",
@@ -140,7 +139,7 @@ function home({ tinylytics }) {
     <div class="feature__text">
       <h2 class="display" id="featured-title"><a href="/${featured.slug}/">${esc(featured.title)}</a></h2>
       <p>${esc(featured.summary)}</p>
-      <p class="meta"><span class="dot" aria-hidden="true"></span>Started ${longDate(featured.started)}. Not released, and there is no download yet.</p>
+      <p class="meta"><span class="dot" aria-hidden="true"></span>Started ${longDate(featured.started)}. Not released; a test build is on its page for friends to try.</p>
       <p><a class="button" href="/${featured.slug}/">About the game${ARROW_RIGHT}</a></p>
     </div>
   </article>
@@ -198,21 +197,25 @@ function throwingWood({ tinylytics }) {
   <div class="plaque">
     <div class="plaque__head"><h2 class="display" id="status">Where it stands</h2>${CRANK}</div>
     <div class="plaque__body">
-    <p>Started ${longDate(game.started)} and in development. It is not released, there is no download, and there is no release date.</p>
+    <p>Started ${longDate(game.started)} and in development. It is not released and there is no release date. A test build, ${esc(game.build.version)} of ${longDate(game.build.date)}, is <a href="#try">here to try</a>; it will change, and it may break.</p>
     <div class="plaque__cols">
       <div>
         <h3 class="label"><span class="swatch swatch--now" aria-hidden="true"></span>Playable now</h3>
         <ul>
+          <li>Against the Playdate: a whole match against the computer.</li>
           <li>Pass and play: a whole match for two teams on one Playdate.</li>
-          <li>Practice: a pitch to throw on, with no match around it.</li>
+          <li>Practice: five drills, and an open pitch to throw on.</li>
+          <li>Grass, sand or snow, wind if you want it, and five kubb sets.</li>
+          <li>The knock of wood on wood, recorded from a real set.</li>
+          <li>A match left part way carries on later; finished games can be read back as score sheets.</li>
         </ul>
       </div>
       <div>
         <h3 class="label"><span class="swatch swatch--later" aria-hidden="true"></span>Not built yet</h3>
         <ul>
-          <li>A computer opponent.</li>
-          <li>Sound.</li>
-          <li>A screen for looking back at saved games.</li>
+          <li>Sharing a finished game’s score sheet.</li>
+          <li>Player profiles.</li>
+          <li>An ice pitch.</li>
         </ul>
       </div>
     </div>
@@ -222,17 +225,29 @@ function throwingWood({ tinylytics }) {
 
 <section class="frame prose" aria-labelledby="crank">
   <h2 class="display" id="crank">Throwing with the crank</h2>
-  <p>Turn the crank back past the bottom of its turn to wind up. The longer the backswing, the more power, up to a full-power mark on the dial. Then flick it forward to throw; how hard and how smoothly the crank turns sets the throw. Turned forward slowly, the crank lets the wind-up down without a throw.</p>
+  <p>Turn the crank back past the bottom of its turn to wind up. The longer the backswing, the more power, up to the full-power notch on the dial. Then flick it forward and stop it on the dial’s front notch, the loft you set: the crank is the throwing arm, so where it stops is the angle the baton leaves at. Stop early and it goes low, late and it goes high. After each throw the game says where you stopped, and it shows a card on how to throw the first time you aim. Turned forward slowly, the crank lets the wind-up down without a throw.</p>
   <table class="controls">
     <caption class="label">Before the throw</caption>
     <tbody>
       <tr><th scope="row">D-pad <kbd class="key" aria-label="left">◀</kbd><kbd class="key" aria-label="right">▶</kbd></th><td>Walk along the throwing line</td></tr>
       <tr><th scope="row">Hold <kbd class="key">B</kbd>, turn the crank</th><td>Turn left or right to aim</td></tr>
       <tr><th scope="row">Hold <kbd class="key">A</kbd>, turn the crank</th><td>Set the loft, higher or lower</td></tr>
-      <tr><th scope="row">Crank back, then flick</th><td>Wind up and throw</td></tr>
+      <tr><th scope="row">Crank back, flick, stop</th><td>Wind up, throw, and set the angle</td></tr>
     </tbody>
   </table>
   <p class="meta">The feel of the throw is tuned on a real Playdate as the game is built, so the controls may still change.</p>
+</section>
+
+<section class="frame prose" aria-labelledby="try">
+  <h2 class="display" id="try">Try the test build</h2>
+  <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is a work in progress: things will change from build to build, and some may break.</p>
+  <p><a class="button" href="${game.build.url}" download>${esc(game.build.file)} (${esc(game.build.size)})${ARROW_DOWN}</a></p>
+  <ol>
+    <li>Download the file above and keep it zipped.</li>
+    <li>Sign in at <a href="https://play.date/account/sideload/">play.date</a>, open your account’s Sideload page and upload it. Your Playdate must be registered to your account.</li>
+    <li>On the Playdate, open the Game Library (Settings, then Games, on older system versions), refresh the list if it has not, and download Kubb: Throwing Wood.</li>
+  </ol>
+  <p class="meta">A newer build goes the same way and replaces this one.</p>
 </section>
 
 <section class="frame" aria-labelledby="screens">
