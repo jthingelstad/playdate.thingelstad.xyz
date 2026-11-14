@@ -4,6 +4,14 @@
  * shadows, a black rail on top. Type and the frame come from the shared
  * tokens (tokens.css, vendored from thingelstad.com/shared). Dark mode is the
  * Playdate's own Invert: the page swaps ink and paper; screens stay as drawn.
+ *
+ * One colour: Playdate yellow (--brand-yellow on play.date). Yellow is the
+ * shell, never the screen: it frames screens, fills bands, tags, buttons and
+ * key caps, and stays put in Invert. Text on yellow is black. Yellow is never
+ * text on white.
+ *
+ * Effects move in hard steps (steps(), no easing, no blur) and all stop under
+ * prefers-reduced-motion.
  */
 
 @font-face {
@@ -17,10 +25,18 @@
 :root {
   --paper: #ffffff;
   --ink: #000000;
+  --y: #ffc833;
   --checker: repeating-conic-gradient(var(--ink) 0 25%, var(--paper) 0 50%) 0
     0 / 4px 4px;
+  --checker-y: repeating-conic-gradient(#000 0 25%, var(--y) 0 50%) 0 0 / 8px
+    8px;
   --display: "Londrina Solid", "Inter Tight", system-ui, sans-serif;
   color-scheme: light dark;
+}
+@supports (color: color(display-p3 1 1 1)) {
+  :root {
+    --y: color(display-p3 1 0.784 0.2);
+  }
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -82,39 +98,66 @@ a:focus-visible,
   padding: 0.5rem 1rem;
 }
 
-/* The rail: the HUD's black bar along the top. */
+/* The rail: the HUD's black bar along the top. Black in both modes. */
 .rail {
-  background: var(--ink);
-  color: var(--paper);
+  background: #000;
+  color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  .rail {
+    border-bottom: 3px solid var(--y);
+  }
 }
 .rail__inner {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
-  gap: 4px 24px;
-  min-height: 48px;
+  gap: 0 24px;
+  min-height: 52px;
 }
 .rail a {
-  color: var(--paper);
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
   font-weight: 800;
   font-size: var(--jt-size-label);
   letter-spacing: var(--jt-tracking-label);
   text-transform: uppercase;
   text-decoration: none;
 }
-.rail a[aria-current="page"],
 .rail a:hover {
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration-color: var(--y);
+  text-decoration-thickness: 3px;
+}
+.rail a[aria-current="page"]:not(.rail__brand) {
+  box-shadow: inset 0 -4px 0 var(--y);
 }
 .rail a:focus-visible {
-  outline-color: var(--paper);
+  outline-color: var(--y);
 }
 .rail__brand {
+  gap: 12px;
+}
+.rail__badge {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: var(--y);
+  color: #000;
+  border-radius: 6px;
+}
+.rail__nav {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+}
+.rail__crank {
+  align-self: center;
+  color: var(--y);
 }
 
 /* Type */
@@ -123,11 +166,11 @@ a:focus-visible,
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  line-height: 1;
+  line-height: 0.95;
   margin: 0 0 0.4em;
 }
 h1.display {
-  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  font-size: clamp(2.75rem, 9vw, 7rem);
 }
 h2.display {
   font-size: clamp(2rem, 5vw, 2.75rem);
@@ -141,7 +184,7 @@ h2.display {
 .lede {
   font-size: 1.375rem;
   line-height: 1.45;
-  max-width: 38rem;
+  max-width: 32rem;
   margin: 0 0 1rem;
 }
 .label {
@@ -175,20 +218,50 @@ h2.display {
   background: var(--ink);
   color: var(--paper);
 }
-.button {
+.kicker {
   display: inline-block;
-  background: var(--ink);
-  color: var(--paper);
+  background: #000;
+  color: var(--y);
+  padding: 4px 10px;
+}
+
+/* Buttons press into their hard shadow. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 1.25rem;
+  background: var(--y);
+  color: #000;
+  border: 3px solid #000;
   font-weight: 800;
   font-size: var(--jt-size-ui);
   letter-spacing: var(--jt-tracking-label);
   text-transform: uppercase;
   text-decoration: none;
-  padding: 0.55rem 1.1rem;
-  box-shadow: 6px 6px 0 0 color-mix(in srgb, var(--ink) 35%, var(--paper));
+  box-shadow: 6px 6px 0 0 var(--ink);
+  transition:
+    transform 90ms steps(2),
+    box-shadow 90ms steps(2);
 }
 .button:hover {
-  text-decoration: underline;
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+.button:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 0 var(--ink);
+}
+.button--paper {
+  background: #fff;
+  box-shadow: 6px 6px 0 0 #000;
+}
+.button--paper:hover {
+  box-shadow: 3px 3px 0 0 #000;
+}
+.button svg {
+  flex: none;
 }
 
 /* Sections, separated by a strip of the 50% checker. */
@@ -204,6 +277,9 @@ main > section + section::before {
   margin-bottom: 2.5rem;
   background: var(--checker);
 }
+main > section.facts::before {
+  display: none;
+}
 .intro {
   padding-top: 3rem !important;
 }
@@ -212,33 +288,159 @@ main > section + section::before {
   max-width: var(--jt-measure);
 }
 
+/* The yellow band at the top of a page. Black on yellow in both modes. */
+main > section.hero,
+.game > section.hero {
+  padding: 0;
+  background: var(--y);
+  color: #000;
+  border-bottom: 3px solid #000;
+  overflow: hidden;
+}
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: center;
+  padding-block: 4.5rem 5rem;
+}
+.hero .display {
+  margin: 0;
+}
+.hero .lede {
+  margin: 1.5rem 0 2rem;
+}
+.hero a:focus-visible {
+  outline-color: #000;
+}
+.hero--game .hero__inner {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  padding-block: 3.5rem 4rem;
+}
+.hero--game h1.display {
+  font-size: clamp(2.75rem, 6vw, 4.75rem);
+}
+
+/* A screen in a black bezel, with a crank beside it. */
+.device {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 30rem);
+  margin: 0;
+}
+.device__bezel {
+  background: #000;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 12px 12px 0 #000;
+}
+.device__screen {
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  line-height: 0;
+}
+.device__screen img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+}
+.device:hover .device__screen img {
+  filter: invert(1);
+}
+.device__crank {
+  position: absolute;
+  right: -44px;
+  top: 30%;
+}
+.device figcaption {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+/* The strip under the hero: a yellow-and-black checker that marches. */
+.strip {
+  height: 12px;
+  background: var(--checker-y);
+  image-rendering: pixelated;
+}
+
 /* The featured game on the home page. */
 .feature {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 2rem;
+  gap: 3rem;
   align-items: center;
 }
 .feature__art {
+  position: relative;
   display: block;
   border: 3px solid var(--ink);
   background: #ffffff;
-  padding: 1.5rem;
+  padding: 1.75rem;
   box-shadow: 10px 10px 0 0 var(--ink);
+  transition:
+    transform 120ms steps(3),
+    box-shadow 120ms steps(3);
+}
+.feature__art:hover {
+  transform: translate(-4px, -4px) rotate(-1deg);
+  box-shadow: 16px 16px 0 0 var(--ink);
 }
 .feature__art img {
   display: block;
   width: 100%;
 }
+.sticker {
+  position: absolute;
+  top: -16px;
+  right: 20px;
+  background: var(--y);
+  color: #000;
+  border: 3px solid #000;
+  padding: 2px 10px;
+  font-size: var(--jt-size-label);
+  font-weight: 800;
+  letter-spacing: var(--jt-tracking-label);
+  text-transform: uppercase;
+  transform: rotate(3deg);
+}
+.feature .display {
+  margin-bottom: 1rem;
+}
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  background: var(--y);
+  border: 2px solid var(--ink);
+  vertical-align: 0;
+}
+
+/* Three small facts under the feature. */
+.facts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.fact {
+  border: 3px solid var(--ink);
+  padding: 1.25rem;
+  box-shadow: 6px 6px 0 0 var(--y);
+}
+.fact h3 {
+  margin: 0 0 0.5rem;
+}
+.fact p {
+  margin: 0;
+  font-size: var(--jt-size-small);
+}
 
 /* The game page */
-.game__hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 2rem;
-  align-items: center;
-  padding-top: 3rem;
-  padding-bottom: 1rem;
+.game__intro .lede {
+  margin-bottom: 0;
 }
 .game__title-screen,
 .shot__screen {
@@ -255,11 +457,27 @@ main > section + section::before {
 }
 .plaque {
   border: 3px solid var(--ink);
-  padding: 1.5rem;
   box-shadow: 8px 8px 0 0 var(--ink);
 }
-.plaque > p {
+.plaque__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--y);
+  color: #000;
+  border-bottom: 3px solid #000;
+  padding: 0.85rem 1.5rem;
+}
+.plaque__head .display {
+  margin: 0;
+}
+.plaque__body {
+  padding: 1.5rem;
+}
+.plaque__body > p {
   max-width: var(--jt-measure);
+  margin-top: 0;
 }
 .plaque__cols {
   display: grid;
@@ -270,11 +488,26 @@ main > section + section::before {
   margin: 0 0 1rem;
   padding-left: 1.2em;
 }
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  border: 2px solid var(--ink);
+  vertical-align: -1px;
+}
+.swatch--now {
+  background: var(--y);
+}
+.swatch--later {
+  background: var(--checker);
+}
 .controls {
   border-collapse: collapse;
   width: 100%;
   margin: 1.5rem 0;
   border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 0 var(--y);
 }
 .controls caption {
   text-align: left;
@@ -282,20 +515,34 @@ main > section + section::before {
 .controls th,
 .controls td {
   text-align: left;
-  vertical-align: top;
-  padding: 0.6rem 0.9rem;
+  vertical-align: middle;
+  padding: 0.7rem 0.9rem;
   border-top: 2px solid var(--ink);
 }
 .controls th {
-  background: var(--ink);
-  color: var(--paper);
   font-weight: 700;
   width: 45%;
-  border-top-color: var(--paper);
 }
 .controls tr:first-child th,
 .controls tr:first-child td {
   border-top: 0;
+}
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  margin: 0 2px;
+  border: 2px solid #000;
+  background: var(--y);
+  color: #000;
+  font-family: var(--jt-font-body);
+  font-size: var(--jt-size-label);
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 2px 2px 0 var(--ink);
 }
 .shots {
   display: grid;
@@ -310,16 +557,46 @@ main > section + section::before {
   margin-top: 1rem;
   font-size: var(--jt-size-small);
 }
+/* Captures sit in a yellow shell; design boards keep a dashed white frame. */
+.shot--screen .shot__screen {
+  background: var(--y);
+  border: 3px solid #000;
+  border-radius: 16px;
+  padding: 14px;
+  transition:
+    transform 110ms steps(3),
+    box-shadow 110ms steps(3);
+}
+.shot--screen .shot__screen img {
+  border: 6px solid #000;
+  border-radius: 6px;
+  background: #fff;
+}
+.shot--screen .shot__screen:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 0 var(--ink);
+}
+.shot__screen:hover img {
+  filter: invert(1);
+}
 .shot--design .shot__screen {
   border-style: dashed;
 }
 
-/* Footer */
+/* Footer: black, with a yellow edge. */
 .foot {
   margin-top: 3rem;
-  padding-block: 2rem 3rem;
-  border-top: 3px solid var(--ink);
+  padding-block: 2.5rem 3rem;
+  background: #000;
+  color: #fff;
+  border-top: 12px solid var(--y);
   font-size: var(--jt-size-small);
+}
+.foot a {
+  text-decoration-color: var(--y);
+}
+.foot a:focus-visible {
+  outline-color: var(--y);
 }
 .foot p {
   max-width: var(--jt-measure);
@@ -342,11 +619,96 @@ main > section + section::before {
   image-rendering: auto;
 }
 
+/* Motion: in steps, and only when it is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pd-crank {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes pd-march {
+    to {
+      background-position: 16px 0;
+    }
+  }
+  @keyframes pd-boot {
+    from {
+      clip-path: inset(49% 0 49% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  .strip {
+    animation: pd-march 1.2s steps(4) infinite;
+  }
+  .device__crank-arm {
+    transform-origin: 16px 60px;
+    animation: pd-crank 6s steps(24) infinite;
+  }
+  .plaque__crank {
+    animation: pd-crank 2.4s steps(12) infinite;
+  }
+  .device__screen {
+    animation: pd-boot 600ms steps(8) 200ms both;
+  }
+  /* The rail's crank turns as the page scrolls, in 30° notches. */
+  @supports (animation-timeline: scroll()) {
+    .rail__crank {
+      animation: pd-crank linear both;
+      animation-timing-function: steps(24);
+      animation-timeline: scroll(root);
+    }
+    /* Screens power on as they scroll into view. */
+    .shot__screen img {
+      animation: pd-boot linear both;
+      animation-timing-function: steps(8);
+      animation-timeline: view();
+      animation-range: entry 10% cover 30%;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .feature__art,
+  .shot--screen .shot__screen {
+    transition: none;
+  }
+  /* Nothing moves: hover and press keep the element and its shadow still. */
+  .button:hover,
+  .button:active,
+  .feature__art:hover,
+  .shot--screen .shot__screen:hover {
+    transform: none;
+  }
+  .button:hover,
+  .button:active {
+    box-shadow: 6px 6px 0 0 var(--ink);
+  }
+  .button--paper:hover,
+  .button--paper:active {
+    box-shadow: 6px 6px 0 0 #000;
+  }
+  .feature__art:hover {
+    box-shadow: 10px 10px 0 0 var(--ink);
+  }
+  .shot--screen .shot__screen:hover {
+    box-shadow: 8px 8px 0 0 var(--ink);
+  }
+}
+
 @media (max-width: 48rem) {
   .feature,
-  .game__hero,
+  .hero__inner,
+  .hero--game .hero__inner,
   .plaque__cols {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .hero__inner {
+    padding-block: 3rem 3.5rem;
+  }
+  .device__crank {
+    display: none;
   }
   .feature__art {
     padding: 1rem;

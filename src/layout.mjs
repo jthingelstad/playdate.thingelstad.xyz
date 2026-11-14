@@ -72,8 +72,8 @@ ${OWNER.relMe.map((href) => `<link rel="me" href="${href}">`).join("\n")}
 <a class="skip" href="#main">Skip to the page</a>
 <header class="rail">
   <div class="frame rail__inner">
-    <a class="rail__brand" href="/"${current("/")}><svg class="rail__flag" viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><path d="M1 0v12M1 1h8l-3 3 3 3H1" fill="currentColor" stroke="currentColor" stroke-width="2"/></svg>${esc(SITE_NAME)}</a>
-    <nav class="rail__nav" aria-label="Games"><a href="/throwing-wood/"${current("/throwing-wood/")}>Throwing Wood</a></nav>
+    <a class="rail__brand" href="/"${current("/")}><span class="rail__badge"><svg class="rail__flag" viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><path d="M1 0v12M1 1h8l-3 3 3 3H1" fill="currentColor" stroke="currentColor" stroke-width="2"/></svg></span>${esc(SITE_NAME)}</a>
+    <nav class="rail__nav" aria-label="Games"><a href="/throwing-wood/"${current("/throwing-wood/")}>Throwing Wood</a><svg class="rail__crank" viewBox="0 0 22 22" width="22" height="22" aria-hidden="true"><circle cx="11" cy="11" r="3" fill="currentColor"/><path d="M11 11h8" stroke="currentColor" stroke-width="3"/><rect x="16" y="8" width="5" height="6" fill="currentColor"/></svg></nav>
   </div>
 </header>
 <main id="main">

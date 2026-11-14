@@ -25,6 +25,12 @@ https://thingelstad.xyz/things/kubb-throwing-wood/.
   checker as the only grey, hard shadows, `image-rendering: pixelated`. Dark
   mode is the Playdate's Invert. Display type is Londrina Solid Black (OFL),
   unmodified; keep its licence at `public/fonts/OFL-LondrinaSolid.txt`.
+- **One colour: Playdate yellow**, `#FFC833` (`--brand-yellow` on play.date,
+  with its Display P3 value). Yellow is the shell, never the screen: it frames
+  screens and fills the hero band, tags, buttons and key caps, and it stays
+  put in Invert. Text on yellow is black; yellow is never text on white.
+- Effects move in hard steps (`steps()`, no easing or blur) and stop under
+  `prefers-reduced-motion`.
 - Shared type comes from `../shared/tokens.css` (`npm run shared:sync`,
   `npm run shared:check`). The site is not in `shared/sites.json` and does not
   carry the sites strip; adding it is Jamie's call.

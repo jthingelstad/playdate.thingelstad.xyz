@@ -19,6 +19,19 @@ function screen({ src, alt, caption, kind }) {
 </figure>`;
 }
 
+const ARROW_DOWN = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v10M3 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg>`;
+const ARROW_RIGHT = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h10M8 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg>`;
+const CRANK = `<svg class="plaque__crank" viewBox="0 0 22 22" width="22" height="22" aria-hidden="true"><circle cx="11" cy="11" r="3" fill="currentColor"/><path d="M11 11h8" stroke="currentColor" stroke-width="3"/><rect x="16" y="8" width="5" height="6" fill="currentColor"/></svg>`;
+
+// A 1-bit screen in a black bezel, with a crank on its right.
+function device({ src, alt, caption }) {
+  return `<figure class="device">
+      <div class="device__bezel"><div class="device__screen"><img src="${src}" alt="${esc(alt)}" width="800" height="480"></div></div>
+      <svg class="device__crank" width="56" height="120" viewBox="0 0 56 120" aria-hidden="true"><rect x="0" y="44" width="16" height="32" fill="#000"/><g class="device__crank-arm"><rect x="14" y="56" width="34" height="8" fill="#000"/><rect x="40" y="46" width="14" height="28" rx="3" fill="#000"/></g></svg>
+      ${caption ? `<figcaption class="label">${esc(caption)}</figcaption>` : ""}
+    </figure>`;
+}
+
 const SCREENS = [
   {
     file: "title",
@@ -105,21 +118,39 @@ const DESIGNS = [
 
 function home({ tinylytics }) {
   const others = games.filter((game) => game !== featured);
-  const body = `<section class="intro frame">
-  <h1 class="display">Playdate games</h1>
-  <p class="lede">Games Jamie Thingelstad is making for the Playdate, the small handheld with a black-and-white screen and a crank on its side.</p>
+  const inDev = games.filter((game) => game.status === "In development").length;
+  const kicker =
+    inDev === 1 ? "One game in development" : `${inDev} games in development`;
+  const body = `<section class="hero">
+  <div class="hero__inner frame">
+    <div>
+      <p class="label kicker">${kicker}</p>
+      <h1 class="display">Playdate<br>games</h1>
+      <p class="lede">Games Jamie Thingelstad is making for the Playdate, the small handheld with a black-and-white screen and a crank on its side.</p>
+      <p><a class="button button--paper" href="#featured-title">See the game${ARROW_DOWN}</a></p>
+    </div>
+    ${device({ src: "/throwing-wood/title.png", alt: "The title screen of Kubb: Throwing Wood: KUBB in cut wood letters, its last B knocked over by a baton, above THROWING WOOD.", caption: "The title screen. Hover to invert." })}
+  </div>
 </section>
+<div class="strip" aria-hidden="true"></div>
 <section class="frame" aria-labelledby="featured-title">
+  <p class="label">Featured</p>
   <article class="feature">
-    <a class="feature__art" href="/${featured.slug}/" tabindex="-1" aria-hidden="true"><img src="${featured.card.src}" alt="" width="${featured.card.width * 2}" height="${featured.card.height * 2}"></a>
+    <a class="feature__art" href="/${featured.slug}/" tabindex="-1" aria-hidden="true"><img src="${featured.card.src}" alt="" width="${featured.card.width * 2}" height="${featured.card.height * 2}"><span class="sticker">${esc(featured.status)}</span></a>
     <div class="feature__text">
-      <p class="label">Featured <span class="tag">${esc(featured.status)}</span></p>
       <h2 class="display" id="featured-title"><a href="/${featured.slug}/">${esc(featured.title)}</a></h2>
       <p>${esc(featured.summary)}</p>
-      <p class="meta">Started ${longDate(featured.started)}. Not released, and there is no download yet.</p>
-      <p><a class="button" href="/${featured.slug}/">About the game</a></p>
+      <p class="meta"><span class="dot" aria-hidden="true"></span>Started ${longDate(featured.started)}. Not released, and there is no download yet.</p>
+      <p><a class="button" href="/${featured.slug}/">About the game${ARROW_RIGHT}</a></p>
     </div>
   </article>
+</section>
+<section class="frame facts" aria-label="About the Playdate games">
+  <div class="facts__grid">
+    <div class="fact"><h3 class="label">The screen</h3><p>400 by 240 pixels, one bit. Everything on it is black or white; grey is a checker.</p></div>
+    <div class="fact"><h3 class="label">The crank</h3><p>Throwing Wood uses it as the throwing arm: wind back, then flick.</p></div>
+    <div class="fact"><h3 class="label">The build</h3><p>Lua and the Playdate SDK. Jamie plays each build on his own Playdate.</p></div>
+  </div>
 </section>
 ${
   others.length
@@ -144,14 +175,17 @@ ${
 function throwingWood({ tinylytics }) {
   const game = games.find((g) => g.slug === "throwing-wood");
   const body = `<article class="game">
-<header class="game__hero frame">
-  <div class="game__title-screen"><img src="/throwing-wood/title.png" alt="The title screen: KUBB in cut wood letters, its last B knocked over by a baton, above THROWING WOOD." width="800" height="480"></div>
-  <div class="game__intro">
-    <p class="label"><span class="tag">${esc(game.status)}</span></p>
-    <h1 class="display">${esc(game.title)}</h1>
-    <p class="lede">A game of Kubb for the Playdate. The crank is the throwing arm.</p>
+<section class="hero hero--game">
+  <div class="hero__inner frame">
+    ${device({ src: "/throwing-wood/title.png", alt: "The title screen: KUBB in cut wood letters, its last B knocked over by a baton, above THROWING WOOD." })}
+    <div class="game__intro">
+      <p class="label kicker">${esc(game.status)}</p>
+      <h1 class="display">${esc(game.title).replace(": ", ":<br>")}</h1>
+      <p class="lede">A game of Kubb for the Playdate. The crank is the throwing arm.</p>
+    </div>
   </div>
-</header>
+</section>
+<div class="strip" aria-hidden="true"></div>
 
 <section class="frame prose" aria-labelledby="what">
   <h2 class="display" id="what">What it is</h2>
@@ -162,24 +196,26 @@ function throwingWood({ tinylytics }) {
 
 <section class="frame" aria-labelledby="status">
   <div class="plaque">
-    <h2 class="display" id="status">Where it stands</h2>
+    <div class="plaque__head"><h2 class="display" id="status">Where it stands</h2>${CRANK}</div>
+    <div class="plaque__body">
     <p>Started ${longDate(game.started)} and in development. It is not released, there is no download, and there is no release date.</p>
     <div class="plaque__cols">
       <div>
-        <h3 class="label">Playable now</h3>
+        <h3 class="label"><span class="swatch swatch--now" aria-hidden="true"></span>Playable now</h3>
         <ul>
           <li>Pass and play: a whole match for two teams on one Playdate.</li>
           <li>Practice: a pitch to throw on, with no match around it.</li>
         </ul>
       </div>
       <div>
-        <h3 class="label">Not built yet</h3>
+        <h3 class="label"><span class="swatch swatch--later" aria-hidden="true"></span>Not built yet</h3>
         <ul>
           <li>A computer opponent.</li>
           <li>Sound.</li>
           <li>A screen for looking back at saved games.</li>
         </ul>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -190,9 +226,9 @@ function throwingWood({ tinylytics }) {
   <table class="controls">
     <caption class="label">Before the throw</caption>
     <tbody>
-      <tr><th scope="row">D-pad left and right</th><td>Walk along the throwing line</td></tr>
-      <tr><th scope="row">Hold B, turn the crank</th><td>Turn left or right to aim</td></tr>
-      <tr><th scope="row">Hold A, turn the crank</th><td>Set the loft, higher or lower</td></tr>
+      <tr><th scope="row">D-pad <kbd class="key" aria-label="left">◀</kbd><kbd class="key" aria-label="right">▶</kbd></th><td>Walk along the throwing line</td></tr>
+      <tr><th scope="row">Hold <kbd class="key">B</kbd>, turn the crank</th><td>Turn left or right to aim</td></tr>
+      <tr><th scope="row">Hold <kbd class="key">A</kbd>, turn the crank</th><td>Set the loft, higher or lower</td></tr>
       <tr><th scope="row">Crank back, then flick</th><td>Wind up and throw</td></tr>
     </tbody>
   </table>
