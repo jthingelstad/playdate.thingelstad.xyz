@@ -674,6 +674,27 @@ main > section.hero,
   .shot--screen .shot__screen {
     transition: none;
   }
+  /* Nothing moves: hover and press keep the element and its shadow still. */
+  .button:hover,
+  .button:active,
+  .feature__art:hover,
+  .shot--screen .shot__screen:hover {
+    transform: none;
+  }
+  .button:hover,
+  .button:active {
+    box-shadow: 6px 6px 0 0 var(--ink);
+  }
+  .button--paper:hover,
+  .button--paper:active {
+    box-shadow: 6px 6px 0 0 #000;
+  }
+  .feature__art:hover {
+    box-shadow: 10px 10px 0 0 var(--ink);
+  }
+  .shot--screen .shot__screen:hover {
+    box-shadow: 8px 8px 0 0 var(--ink);
+  }
 }
 
 @media (max-width: 48rem) {
