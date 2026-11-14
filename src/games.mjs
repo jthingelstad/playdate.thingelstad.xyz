@@ -21,6 +21,15 @@ export const games = [
       alt: "KUBB in cut wood letters, the last B knocked over by a baton, above THROWING WOOD.",
     },
     record: "https://thingelstad.xyz/things/kubb-throwing-wood/",
+    // A test build for friends to sideload: not a release. Built with
+    // `make release` in the game's repository and uploaded to files.thingelstad.com.
+    build: {
+      version: "0.1.0",
+      date: "2026-11-14",
+      url: "https://files.thingelstad.com/playdate/throwing-wood/ThrowingWood-0.1.0.pdx.zip",
+      file: "ThrowingWood-0.1.0.pdx.zip",
+      size: "466 KB",
+    },
   },
 ];
 
