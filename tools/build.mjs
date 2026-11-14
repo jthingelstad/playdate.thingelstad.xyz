@@ -62,7 +62,7 @@ await fs.writeFile(
 ${games
   .map(
     (game) =>
-      `- [${game.title}](${ORIGIN}/${game.slug}/): ${game.status.toLowerCase()} since ${game.started}, not released and no download. ${game.summary} The record of how it is being built: ${game.record}`,
+      `- [${game.title}](${ORIGIN}/${game.slug}/): ${game.status.toLowerCase()} since ${game.started}, not released${game.build ? `; a test build to try, ${game.build.version} of ${game.build.date}, is at ${game.build.url} (a zipped .pdx to sideload)` : " and no download"}. ${game.summary} The record of how it is being built: ${game.record}`,
   )
   .join("\n")}
 `,
