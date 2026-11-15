@@ -197,7 +197,7 @@ function throwingWood({ tinylytics }) {
   <div class="plaque">
     <div class="plaque__head"><h2 class="display" id="status">Where it stands</h2>${CRANK}</div>
     <div class="plaque__body">
-    <p>Started ${longDate(game.started)} and in development. It is not released and there is no release date. A test build, ${esc(game.build.version)} of ${longDate(game.build.date)}, is <a href="#try">here to try</a>. It is the last test build before 1.0.0, so what players say about it now shapes the release. It will change, and it may break.</p>
+    <p>Started ${longDate(game.started)} and in development. It is not released and there is no release date. A test build, ${esc(game.build.version)} of ${longDate(game.build.date)}, is <a href="#try">here to try</a>. It is the release candidate for 1.0.0, so what players say about it now shapes the release. It may still change, and it may break.</p>
     <div class="plaque__cols">
       <div>
         <h3 class="label"><span class="swatch swatch--now" aria-hidden="true"></span>Playable now</h3>
@@ -205,6 +205,7 @@ function throwingWood({ tinylytics }) {
           <li>Against the Playdate: a whole match against the computer, which throws the way you do. You see its swing on the clock.</li>
           <li>Pass and play: a whole match for two teams of one to six, passing one Playdate.</li>
           <li>Saved players, each with their own Throw level (Beginner, Club or Pro) and history.</li>
+          <li>HOW TO PLAY and HOW TO THROW: the rules of Kubb on six short cards, then the throw walked through on the practice pitch.</li>
           <li>Practice: seven drills, among them DOUBLES and THE WALL, and an open pitch to throw on.</li>
           <li>Grass, sand or snow, wind if you want it, and five kubb sets.</li>
           <li>The knock of wood on wood, recorded from a real set.</li>
@@ -215,7 +216,6 @@ function throwingWood({ tinylytics }) {
         <h3 class="label"><span class="swatch swatch--later" aria-hidden="true"></span>Not built yet</h3>
         <ul>
           <li>Sharing a finished game’s score sheet.</li>
-          <li>HOW TO THROW, the lesson in the game, for the new throw.</li>
           <li>An ice pitch.</li>
         </ul>
       </div>
@@ -228,7 +228,7 @@ function throwingWood({ tinylytics }) {
   <h2 class="display" id="crank">Throwing with the crank</h2>
   <p>The crank is the throwing arm. Read it as a clock: hanging straight down is 6. Pull it back up the left side for power: 9 o’clock throws about 4 meters, 10 o’clock about 8. Then swing it forward up the right side and stop it: where it stops sets the arc. Stop at 3 for a base kubb, 4 for a field kubb, half past 3 for the king, and half past 1 to drill a kubb. The dial marks how far back to pull and where to stop, and after each throw the game says in a word how the power, the release and the steadiness went. Stop before 6 and the wind-up is let down without a throw.</p>
   <p>You can just point and throw: the target circle starts on a kubb, you stand behind it, the arc is chosen for you, and you only crank. The view is first person; while <kbd class="key">B</kbd> is held it swings out over your shoulder. A drilled kubb can be given spin, which rolls it sideways once it lands.</p>
-  <p>HOW TO THROW, the lesson in the game, taught the old throw and was taken out with it. It has not been rewritten yet, so for now these lines are the lesson.</p>
+  <p>The game teaches it too. In PRACTICE, HOW TO PLAY covers the rules of Kubb on six short cards, and HOW TO THROW walks through the throw on the practice pitch with the real crank and dial.</p>
   <table class="controls">
     <caption class="label">Before the throw</caption>
     <tbody>
@@ -244,8 +244,15 @@ function throwingWood({ tinylytics }) {
 
 <section class="frame prose" aria-labelledby="try">
   <h2 class="display" id="try">Try the test build</h2>
-  <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is the last test build before 1.0.0, so feedback now shapes the release. It is still a work in progress: things will change, and some may break.</p>
-  <p>New since 0.2.0:</p>
+  <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is the release candidate for 1.0.0, so feedback on it now shapes the release. It is still a test build: things may change, and some may break.</p>
+  <p>New since 0.9.0:</p>
+  <ul>
+    <li>HOW TO PLAY: the rules of Kubb on six short cards, for anyone who has never played, leading into HOW TO THROW.</li>
+    <li>HOW TO THROW is back, rewritten for the clock throw: a walkthrough on the practice pitch with the real crank and dial. PRACTICE starts on it until you have seen it.</li>
+    <li>Batons hit more like wood: one no longer slips over the top of a kubb, bounces less off it, and keeps its spin on the ground.</li>
+    <li>Plainer words on screen, result flags that say what happened (KING TOO EARLY: GAME OVER, OUT: THROW AGAIN), and menus and cards that fit long names.</li>
+  </ul>
+  <p>New in 0.9.0, for anyone coming from 0.2.0:</p>
   <ul>
     <li>A new throw: the crank read as a clock. Pull back for power; where you stop sets the arc. The d-pad moves a target circle, <kbd class="key">A</kbd> with the d-pad walks, and <kbd class="key">B</kbd> plans the arc and the tilt or spin. A first-person view swings out over the shoulder while <kbd class="key">B</kbd> is held, and drilled kubbs take spin.</li>
     <li>VS PLAYDATE throws the same way, and you see its swing on the clock.</li>
@@ -253,7 +260,7 @@ function throwingWood({ tinylytics }) {
     <li>Two new drills, DOUBLES and THE WALL.</li>
     <li>Fixes from the first play test: drilled kubbs settle instead of rolling on, and the target circle no longer locks onto kubbs, so you can aim off one for the wind.</li>
   </ul>
-  <p>HOW TO THROW went with the old throw and has not been rewritten yet; <a href="#crank">Throwing with the crank</a> above explains the new one. A match saved by 0.2.0 will not resume in 0.9.0.</p>
+  <p>A match saved by 0.2.0 will not resume in this build.</p>
   <p><a class="button" href="${game.build.url}" download>${esc(game.build.file)} (${esc(game.build.size)})${ARROW_DOWN}</a></p>
   <ol>
     <li>Download the file above and keep it zipped.</li>
@@ -265,7 +272,7 @@ function throwingWood({ tinylytics }) {
 
 <section class="frame" aria-labelledby="screens">
   <h2 class="display" id="screens">Screens</h2>
-  <p class="section-note">Captured from the game in the Playdate Simulator on November 13, 2026, at twice the Playdate’s size, before the throw became the clock: the dial and the aim look different in 0.9.0.</p>
+  <p class="section-note">Captured from the game in the Playdate Simulator on November 13, 2026, at twice the Playdate’s size, before the throw became the clock: the dial and the aim look different in this build.</p>
   <div class="shots">
 ${SCREENS.map((s) => screen({ ...s, src: `/throwing-wood/screens/${s.file}.png`, kind: "screen" })).join("\n")}
   </div>
