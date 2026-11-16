@@ -32,6 +32,10 @@ function device({ src, alt, caption }) {
     </figure>`;
 }
 
+// The gameplay reel: 800 x 480 H.264 with no sound, its first frame as the
+// poster, and a 400 x 240 two-colour GIF for browsers without video.
+const REEL = "/throwing-wood/reel/throwing-wood-0.9.5";
+
 const SCREENS = [
   {
     file: "title",
@@ -185,6 +189,18 @@ function throwingWood({ tinylytics }) {
   </div>
 </section>
 <div class="strip" aria-hidden="true"></div>
+
+<section class="frame reel" aria-labelledby="play">
+  <h2 class="display" id="play">See it play</h2>
+  <figure class="shot shot--screen">
+    <div class="shot__screen"><video src="${REEL}.mp4" poster="${REEL}-poster.png" width="800" height="480" autoplay muted loop playsinline controls preload="metadata" aria-label="Kubb: Throwing Wood in play, 26 seconds with no sound.">
+      <img src="${REEL}.gif" alt="Kubb: Throwing Wood in play, a 26-second reel." width="800" height="480">
+    </video></div>
+    <figcaption><span class="tag">Simulator capture</span> Test build ${esc(game.build.version)} in the Playdate Simulator: the title, the first HOW TO PLAY card, the hand-off to the next team, a first baton, two field kubbs down with one baton, a kubb thrown in with a little spin, a shot at the king and the winner card. 26 seconds, no sound.</figcaption>
+  </figure>
+  <p><a class="button" href="#try">Try the test build${ARROW_DOWN}</a></p>
+</section>
+<script>if (matchMedia("(prefers-reduced-motion: reduce)").matches) for (const v of document.querySelectorAll(".reel video")) { v.removeAttribute("autoplay"); v.pause(); }</script>
 
 <section class="frame prose" aria-labelledby="what">
   <h2 class="display" id="what">What it is</h2>
