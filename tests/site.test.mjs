@@ -65,3 +65,22 @@ test("a test build links its zipped .pdx on files.thingelstad.com", () => {
     assert.ok(html.includes(`href="${url}"`), "the page links the build");
   }
 });
+
+test("the gameplay reel plays inline on phones, from this site", () => {
+  const html = PAGES.find((p) => p.path === "/throwing-wood/").render({
+    tinylytics: false,
+  });
+  const video = html.match(/<video\b[^>]*>/)[0];
+  for (const attribute of [
+    "autoplay",
+    "muted",
+    "loop",
+    "playsinline",
+    "controls",
+  ])
+    assert.match(video, new RegExp(`\\s${attribute}\\b`), attribute);
+  assert.match(video, /src="\/throwing-wood\/reel\/[^"]+\.mp4"/);
+  assert.match(video, /poster="\/throwing-wood\/reel\/[^"]+-poster\.png"/);
+  // The reel sits above the download.
+  assert.ok(html.indexOf("<video") < html.indexOf(" download>"));
+});

@@ -29,7 +29,7 @@ for (const page of PAGES) {
   assert.equal(count, analytics ? 1 : 0, `tinylytics.app in ${page.file}`);
 
   // Every local file a page names was built.
-  for (const [, ref] of html.matchAll(/(?:src|href)="(\/[^"#?]*)"/g)) {
+  for (const [, ref] of html.matchAll(/(?:src|href|poster)="(\/[^"#?]*)"/g)) {
     const key = ref.endsWith("/") ? `${ref.slice(1)}index.html` : ref.slice(1);
     assert.ok(keys.has(key), `${page.file} names ${ref}, which was not built`);
   }

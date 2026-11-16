@@ -9,6 +9,8 @@ export const mime = {
   ".txt": "text/plain; charset=utf-8",
   ".xml": "application/xml; charset=utf-8",
   ".png": "image/png",
+  ".gif": "image/gif",
+  ".mp4": "video/mp4",
   ".woff2": "font/woff2",
 };
 

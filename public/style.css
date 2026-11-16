@@ -582,6 +582,34 @@ main > section.hero,
 .shot--design .shot__screen {
   border-style: dashed;
 }
+/* The gameplay reel: the screen at most 800px wide, its pixels kept square. */
+.reel {
+  padding-block: 3rem 1rem;
+}
+.reel .shot {
+  max-width: calc(800px + 46px);
+}
+.reel .shot__screen video,
+.reel .shot__screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 3;
+  border: 6px solid #000;
+  border-radius: 6px;
+  background: #fff;
+  image-rendering: pixelated;
+}
+.reel .shot--screen .shot__screen:hover {
+  transform: none;
+  box-shadow: 8px 8px 0 0 var(--ink);
+}
+.reel .shot__screen:hover video {
+  filter: none;
+}
+.reel .shot figcaption {
+  max-width: var(--jt-measure);
+}
 
 /* Footer: black, with a yellow edge. */
 .foot {
