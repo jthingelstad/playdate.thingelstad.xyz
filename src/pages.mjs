@@ -207,7 +207,7 @@ function throwingWood({ tinylytics }) {
   <p>Kubb is a lawn game played with wooden blocks. Each side throws batons at the other side’s kubbs, the kubbs knocked down are tossed back into play, and the side that clears every kubb and then topples the king wins.</p>
   <p>Throwing Wood plays it on the Playdate’s 400 by 240 pixel black-and-white screen. The pitch is five meters by eight, drawn from behind the thrower. Batons, kubbs and the king are solid bodies in a physics simulation at their real sizes, so what falls is worked out, not chosen: a baton can tumble, skid, glance off a stake or knock one kubb into the next. A baton thrown side-on spins like a helicopter, and it does not count.</p>
   <p>A match is two teams passing one Playdate, played to the U.S. National Kubb Championship rules with a 2-4-6 opening. Each finished match is written as a game file in <a href="${ref("https://thingelstad.xyz/things/planet-kubb-score/", "game")}">Planet Kubb Notation</a>.</p>
-  <p>No Playdate? The same game plays in a browser at <a href="${ref("https://kubb.thingelstad.xyz/", "game")}">kubb.thingelstad.xyz</a>. It runs this game’s own rules and physics, in color, with a dial you drag in place of the crank, and friends can join one pitch from their own browsers by opening a link.</p>
+  <p>No Playdate? The same game plays in a browser at <a href="${ref("https://throwingwood.com/", "game")}">throwingwood.com</a>. It runs this game’s own rules and physics, in color, with a dial you drag in place of the crank, and friends can join one pitch from their own browsers by opening a link.</p>
 </section>
 
 <section class="frame" aria-labelledby="status">
