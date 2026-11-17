@@ -262,7 +262,18 @@ function throwingWood({ tinylytics }) {
 <section class="frame prose" aria-labelledby="try">
   <h2 class="display" id="try">Try the test build</h2>
   <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is the release candidate for 1.0.0, so feedback on it now shapes the release. It is still a test build: things may change, and some may break.</p>
-  <p>New since 0.9.0:</p>
+  <p>New since 0.9.5, mostly the physics, checked against real Kubb on video and a reference physics engine:</p>
+  <ul>
+    <li>A clean baton aimed at a kubb goes through it at half its height, instead of landing short and hopping over it.</li>
+    <li>Throws come down where they are aimed, through air that slows them.</li>
+    <li>Nerves: even a clean swing can drift a little left or right, more on a long throw. The verdicts after a throw now say PULLED LEFT, STRAIGHT or PULLED RIGHT.</li>
+    <li>Drilled kubbs turn in the air and run on from where they land, as real ones do, and the target circle allows for it.</li>
+    <li>VS PLAYDATE drills tighter groups, running later kubbs into the ones already down, and throws down the line of a group.</li>
+    <li>A row of touching kubbs can fall as a row from one baton, and pieces come to rest instead of twitching.</li>
+    <li>The game files note where each kubb stood on the pitch, in the new optional positions of Planet Kubb Notation.</li>
+    <li>The version is shown small on the title screen.</li>
+  </ul>
+  <p>New in 0.9.5, for anyone coming from 0.9.0:</p>
   <ul>
     <li>HOW TO PLAY: the rules of Kubb on six short cards, for anyone who has never played, leading into HOW TO THROW.</li>
     <li>HOW TO THROW is back, rewritten for the clock throw: a walkthrough on the practice pitch with the real crank and dial. PRACTICE starts on it until you have seen it.</li>
