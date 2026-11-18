@@ -262,6 +262,12 @@ function throwingWood({ tinylytics }) {
 <section class="frame prose" aria-labelledby="try">
   <h2 class="display" id="try">Try the test build</h2>
   <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is the release candidate for 1.0.0, so feedback on it now shapes the release. It is still a test build: things may change, and some may break.</p>
+  <p>New in 0.9.7</p>
+  <ul>
+    <li>Club and Pro throwers aim for a half turn of the baton. Long baseline throws vary more, and beginners have more turnover.</li>
+    <li>The computer adds spin to its drilled kubbs at Club and Pro.</li>
+    <li>A sliding baton can move a fallen kubb and push it into another piece. On the practice pitch, six batons stay in play until you pick one up for the next throw.</li>
+  </ul>
   <p>New since 0.9.5, mostly the physics, checked against real Kubb on video and a reference physics engine:</p>
   <ul>
     <li>A clean baton aimed at a kubb goes through it at half its height, instead of landing short and hopping over it.</li>
