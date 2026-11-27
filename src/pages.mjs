@@ -214,14 +214,14 @@ function throwingWood({ tinylytics }) {
   <div class="plaque">
     <div class="plaque__head"><h2 class="display" id="status">Where it stands</h2>${CRANK}</div>
     <div class="plaque__body">
-    <p>Started ${longDate(game.started)} and in development. It is not released and there is no release date. A test build, ${esc(game.build.version)} of ${longDate(game.build.date)}, is <a href="#try">here to try</a>. It is the release candidate for 1.0.0, so what players say about it now shapes the release. It may still change, and it may break.</p>
+    <p>Started ${longDate(game.started)} and in development. It is not released and there is no release date. A test build, ${esc(game.build.version)} of ${longDate(game.build.date)}, is <a href="#try">here to try</a>. It may still change, and it may break.</p>
     <div class="plaque__cols">
       <div>
         <h3 class="label"><span class="swatch swatch--now" aria-hidden="true"></span>Playable now</h3>
         <ul>
           <li>Against the Playdate: a whole match against the computer, which throws the way you do. You see its swing on the clock.</li>
           <li>Pass and play: a whole match for two teams of one to six, passing one Playdate.</li>
-          <li>Saved players, each with their own Throw level (Beginner, Club or Pro) and history.</li>
+          <li>Saved players, each with their own history and their own throw level: EASY, STANDARD or HARD.</li>
           <li>HOW TO PLAY and HOW TO THROW: the rules of Kubb on six short cards, then the throw walked through on the practice pitch.</li>
           <li>Practice: seven drills, among them DOUBLES and THE WALL, and an open pitch to throw on.</li>
           <li>Grass, sand or snow, wind if you want it, and five kubb sets.</li>
@@ -261,8 +261,16 @@ function throwingWood({ tinylytics }) {
 
 <section class="frame prose" aria-labelledby="try">
   <h2 class="display" id="try">Try the test build</h2>
-  <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is the release candidate for 1.0.0, so feedback on it now shapes the release. It is still a test build: things may change, and some may break.</p>
-  <p>New in 0.9.7</p>
+  <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is still a test build: things may change, and some may break.</p>
+  <p>New in 1.1.0:</p>
+  <ul>
+    <li>THROW TO GO: before the first turn, each side throws one baton at the king. The side whose baton ends up closest to the king, without knocking it over, throws first. It is on unless you turn it off.</li>
+    <li>Each person throws on EASY, STANDARD or HARD, set on TEAMS. The level is how wide the bars on the clock are, and nothing else. There are no hidden misses: what you do with the crank is what the baton does.</li>
+    <li>Against the Playdate, the screen stays on your side. Its throws come toward you. Press <kbd class="key">B</kbd> to run its turn at 1X, 2X or 4X, or <kbd class="key">A</kbd> to skip it. The throws are the same either way.</li>
+    <li>Raise kubbs in any order, from one view of the whole group. <kbd class="key">B</kbd> picks the next kubb, left and right pick the end, the crank tips it, and <kbd class="key">A</kbd> stands it up. Auto raise is in the System Menu now.</li>
+  </ul>
+  <p>New in 1.0.0: the 1.0 game, on version 1.0 of the Kubb Engine, the rules and physics it shares with the browser version.</p>
+  <p>New in 0.9.7, for anyone coming from 0.9.6:</p>
   <ul>
     <li>Club and Pro throwers aim for a half turn of the baton. Long baseline throws vary more, and beginners have more turnover.</li>
     <li>The computer adds spin to its drilled kubbs at Club and Pro.</li>
