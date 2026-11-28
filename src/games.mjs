@@ -24,11 +24,11 @@ export const games = [
     // A test build for friends to sideload: not a release. Built with
     // `make release` in the game's repository and uploaded to files.thingelstad.com.
     build: {
-      version: "1.1.0",
-      date: "2026-11-26",
-      url: "https://files.thingelstad.com/playdate/throwing-wood/ThrowingWood-1.1.0.pdx.zip",
-      file: "ThrowingWood-1.1.0.pdx.zip",
-      size: "768 KB",
+      version: "1.1.1",
+      date: "2026-11-27",
+      url: "https://files.thingelstad.com/playdate/throwing-wood/ThrowingWood-1.1.1.pdx.zip",
+      file: "ThrowingWood-1.1.1.pdx.zip",
+      size: "769 KB",
     },
   },
 ];
