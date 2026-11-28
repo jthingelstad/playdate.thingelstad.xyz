@@ -262,6 +262,7 @@ function throwingWood({ tinylytics }) {
 <section class="frame prose" aria-labelledby="try">
   <h2 class="display" id="try">Try the test build</h2>
   <p>Version ${esc(game.build.version)}, built ${longDate(game.build.date)}, for friends to try. It is still a test build: things may change, and some may break.</p>
+  <p>New in 1.1.1: when the Playdate throws, the view from your end keeps the king, the thrower and the target circle on the screen, and when it raises its kubbs you watch from close by.</p>
   <p>New in 1.1.0:</p>
   <ul>
     <li>THROW TO GO: before the first turn, each side throws one baton at the king. The side whose baton ends up closest to the king, without knocking it over, throws first. It is on unless you turn it off.</li>
